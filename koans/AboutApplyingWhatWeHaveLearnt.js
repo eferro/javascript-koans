@@ -59,14 +59,16 @@ describe("About Applying What We Have Learnt", function() {
       }
     }
 
-    expect(sum).toBe(FILL_ME_IN);
+    expect(sum).toBe(233168);
   });
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)", function () {
+    var sum = _(_.range(1, 1000)).chain()
+              .filter(function(x){ return x % 3 === 0 || x % 5 === 0})
+              .reduce(function(sum, x){ return sum + x}, 0)
+              .value();
 
-    var sum = FILL_ME_IN;    /* try chaining range() and reduce() */
-
-    expect(233168).toBe(FILL_ME_IN);
+    expect(233168).toBe(sum);
   });
 
   /*********************************************************************************/
@@ -79,15 +81,22 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
-    var ingredientCount = { "{ingredient name}": 0 };
+    console.log("EFA1");
+    var ingredientCount = _(products).chain()
+                          .map(function(x){return x.ingredients})
+                          .flatten()
+                          .reduce(function(result, x){
+                              if (result[x] === undefined) result[x] = 1;
+                              else result[x] = result[x] + 1;
+                              return result;
+                          }, {})
+                          .value();
 
-    /* chain() together map(), flatten() and reduce() */
-
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
